@@ -1,0 +1,83 @@
+CREATE DATABASE Library 
+
+USE Library
+
+create table Books (
+Book_ISBN  nvarchar(50) primary key not null , 
+Book_Title nvarchar(100) , 
+Book_Picre float , 
+Book_Publisher nvarchar(60) ,
+Book_category nvarchar(60) , 
+IS_available_to_borrow nvarchar(5)
+)
+
+
+create table Author (
+Author_ID nvarchar(50) primary key not null , 
+Author_Name nvarchar(70) , 
+Author_Address nvarchar(50)
+)
+
+
+create table Member (
+Member_ID nvarchar(50) primary key not null , 
+Member_Name nvarchar(50) , 
+Member_Address nvarchar(50) ,
+Member_Phone nvarchar(50) ,
+Member_Email nvarchar(50)
+)
+
+
+create table Publisher (
+Publisher_ID nvarchar(50) , 
+Publisher_Name nvarchar(70) ,
+Publisher_Address nvarchar(70)
+)
+
+
+create table Borrow (
+Member_ID nvarchar(50) , 
+Book_ISBN nvarchar (50) ,
+Borrow_Start_date date , 
+Borrow_End_date  date 
+)
+
+
+create table Admin (
+Admin_ID nvarchar(50) primary key not null , 
+Admin_Name nvarchar (50) ,
+Admin_phone nvarchar(50) ,
+Admin_Address nvarchar(70) ,
+Admin_Password nvarchar(50) ,
+Admin_Email nvarchar(50) ,
+)
+
+
+create table buying (
+Member_ID nvarchar(50) , 
+Book_ISBN nvarchar (50) ,
+buying_of_date date 
+)
+
+
+
+
+
+
+
+
+
+alter table books add Publisher_ID nvarchar(50) 
+alter table books add Author_ID nvarchar(50) 
+alter table books add admin_ID nvarchar(50) 
+
+
+
+
+----- 1 ---most sold Books
+
+select count(*) as number_of_sales , b.Book_ISBN ,bo.Book_title
+from Buying as b , Books as bo 
+where b.Book_ISBN = bo.Book_ISBN
+group by b.Book_ISBN , bo.Book_Title
+order by number_of_sales  desc 
